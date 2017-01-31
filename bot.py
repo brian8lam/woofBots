@@ -43,7 +43,8 @@ def main():
                utils.chat(s, "Thirsty Thursdays: Solo Stream with Matt!")
                utils.chat(s, "Festive Friday: Join the entire crew for party games! 7:30PM EST (ish) until we go to the bar (12A/1A)")
                utils.chat(s, "Shady Saturday Come talk shit and spill the T! 2PM EST (ish) until 8PM EST. WOOooF!")
-
+           if message.strip() == "!points":
+               utils.chat (s, username + " points are " + utils.points(username))
        sleep(1)
 
 
