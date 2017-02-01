@@ -7,6 +7,9 @@ import json
 import time, thread
 from time import sleep
 
+followers = {}
+commands = {}
+
 #Function: Chat
 #Send a chat message to the server.
 #   Parameters:
@@ -37,7 +40,45 @@ def timeout(sock, usr, seconds=600):
 #Checks if the user is following
 #   Parameters:
 #       usr -- the user that is being checked to see if they are following CHAN
-#def follow (usr):
+def follow(usr):
+    #communicates with twitch api to see if the user is following the specified channel
+
+    try:
+        twitchAPI = urllib2.urlopen("http://api.twitch.tv/kraken/users/"+usr+"/follows/channels/"+cfg.CHAN)
+        fJson = json.loads(twitchAPI.read())
+        if "error" in fJson:
+            return False
+        else:
+            return True
+    except:
+        return False
+
+#Function: createCommands
+#Create temperary commands that you can add to your stream for the hell of it
+#   Parameters:
+#       c -- what command that we are going to store
+#       p -- what is going to be said when command is used
+def createCommands(c, p):
+    if c in commands:
+        return "It already exists."
+    try:
+        commands[c] = p
+    except:
+        return "Something broke :("
+    return "It already exists"
+
+#Function: useCommands
+#Uses the commands that are made in the list and returns the phrase stored
+#   Parameters:
+#       sock -- socket that is going to be displayed to
+#       c -- the command that was being used
+def useCommands(sock, c):
+    try:
+        if c in commands:
+            return commands[c]
+    except:
+        return "Command doesn't exist"
+    return "Command doesn't exist"
 
 
 #Function: threadFillOpList
