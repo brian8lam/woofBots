@@ -8,6 +8,7 @@ import re
 import time
 import thread
 import os
+import threading
 from time import sleep
 
 def main():
@@ -23,6 +24,8 @@ def main():
    utils.chat(s, "Hi everyone!")
 
    thread.start_new_thread(utils.threatFillOpList, ())
+   #thread.start_new_thread(utils.constantGreeting(s), ()) #look into multiprocessing / multithreading (threding library?)
+
    timeCount = 0
    while True:
        response = s.recv(1024).decode("utf-8")
@@ -34,7 +37,10 @@ def main():
            message = CHAT_MSG.sub("", response)
            print(response)
            timeCount += 1
-           if timeCount == 120:
+           # Custom Commands
+
+           #Timer code that allows it to run through, but this loop runs each time a command is issued.
+           if timeCount == 500:
                utils.chat(s, "Masc4Masc Mondays: Solo Stream with Jason! 7:30P/8PM EST until 11P/12AM")
                utils.chat(s, "Tabby Tuesdays: Solo Stream with Trent! 7:30P/8PM EST until 11P/12AM")
                utils.chat(s, "Thirsty Thursdays: Solo Stream with Matt! 10PM EST until 12AM")
@@ -43,40 +49,50 @@ def main():
            if timeCount == 200:
                utils.chat(s, "Remeber to follow and turn on the notification settings to know when we go on. To get more information about us, see the details portion of the stream.")
                timeCount = 0
-           #Custom Commands
-           if message.strip() == "!mods":
-               if utils.isOp(username):
-                    utils.chat(s, username + " is a mod or higher")
-           if message.strip() == "!time":
-               utils.chat(s, "It is currently " + time.strftime("%I: %M %p %Z on %A, %B %d %Y."))
-           if message.strip() == "!messages": #and utils.isOp(username):
+
+           if message.strip() == "!messages" and utils.isOp(username):
                utils.chat(s, "Masc4Masc Mondays: Solo Stream with Jason!")
                utils.chat(s, "Tabby Tuesdays: Solo Stream with Trent!")
                utils.chat(s, "Thirsty Thursdays: Solo Stream with Matt!")
                utils.chat(s, "Festive Friday: Join the entire crew for party games! 7:30PM EST (ish) until we go to the bar (12A/1A)")
                utils.chat(s, "Shady Saturday Come talk shit and spill the T! 2PM EST (ish) until 8PM EST. WOOooF!")
-           #if message.strip() == "!points":
-           #    utils.chat (s, username + " points are " + utils.points(username))
            if message.strip() == "!socialmedia":
                utils.chat(s, "You can find us at.")
-           if message.split()[0] == "!ban":
+
+           #!cl whispers the command list NOT WORKING! -- needs a seperate connection to Group chat :/ Not sure..
+           if message.split()[0] == "!cl":
+               utils.whisper(s, message.split(' ', 2)[1], message.split(' ', 2)[2])
+           #!ban Hammer
+           if message.split()[0] == "!ban" and utils.isOp(username):
                user = message.split()[1]
                try:
                    utils.ban(s, message.split()[1])
                except:
                    utils.chat(s, "No name")
-           if message.split()[0] == "!timeout":
+           #!timeout
+           if message.split()[0] == "!timeout" and utils.isOp(username):
                user = message.split()[1]
                try:
                    utils.timeout(s, message.split()[1])
                except:
                    utils.chat(s, "No name")
-           if message.split()[0] == "!create":
+           #!create Command
+           if message.split()[0] == "!create" and utils.isOp(username): # I could make this safer by checking of the word has ! before the command else add it.
                utils.createCommands(message.split(' ', 2)[1], message.split(' ', 2)[2])
-           if message.strip() in utils.commands:
-               utils.usecommand(s, utils.commands[message.strip()])
-           if message.strip() == "!firetemple":
-               utils.chat(s, "'Woop Woop!' *5 hours later* FailFish")
+           #!useCommands created
+           if unicode(message.strip()) in cfg.commands:
+               utils.useCommands(s, message.strip())
+           #!delete commands
+           if message.split()[0] == "!delete" and utils.isOp(username):
+               utils.removeCommands(message.split()[1])
+           # if message.strip() == "!points":
+           #    utils.chat (s, username + " points are " + utils.points(username))
+           #if message.strip() == "!mods":
+            #   print cfg.oplist
+            #   if utils.isOp(username):
+            #        utils.chat(s, username + " is a mod or higher")
+           #if message.strip() == "!time":
+           #    utils.chat(s, "It is currently " + time.strftime("%I: %M %p %Z on %A, %B %d %Y."))
        sleep(1)
 
 
@@ -93,10 +109,7 @@ if __name__ == "__main__":
     # !Jasongram ??
     # !trentgram
     # !mattgram
-    # !messages ??
-    # !ban <user> - not needed has /ban on basicis twitch chat
-    # !timeout <user>
-    # !unban <user>
+    # !unban <user> Do i need this?
     # !untimeout <user>
 
     # !openraffle (variable)
@@ -113,9 +126,14 @@ if __name__ == "__main__":
         # remove bot from list list.remove(value)
         #random number gen to choose out of the array
         # multiplier equation later on for it
+
+#Done/Works:
     # !create
         # look into this on how to make it so that it allows you to create your own if statement
             #basic template of "if message.strip() == array[i]
                                 # utils.chat (s, array2[i])
         # I guess i can make an associative array, Index as command, second is the array that gets what's printed for that specific index.
         # ^^ issue of storage, unless it's a one time thing
+    # !ban <user> - not needed has /ban on basicis twitch chat
+    # !timeout <user>
+    #  !messages ??

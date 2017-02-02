@@ -7,16 +7,24 @@ import json
 import time, thread
 from time import sleep
 
-followers = {}
-commands = {}
 
-#Function: Chat
+#Function: chat
 #Send a chat message to the server.
 #   Parameters:
-#       sock -- the socket over which to end the message
+#       sock -- the socket over which to send the message
 #       msg -- the message to send
 def chat(sock, msg):
     str = "PRIVMSG #{} :{}\r\n".format(cfg.CHAN, msg)
+    sock.send(str)
+
+#Function: whisper
+#Send a whisper to the person
+#   Parameters:
+#       sock -- the socket over which to send the message
+#       msg -- the message to send
+#       usr -- to the user
+def whisper(sock, msg, usr):
+    str = "PRIVMSG #{} :/w:{} :{}\r\n ".format(cfg.CHAN, msg, usr)
     sock.send(str)
 
 #Function: ban
@@ -42,7 +50,6 @@ def timeout(sock, usr, seconds=600):
 #       usr -- the user that is being checked to see if they are following CHAN
 def follow(usr):
     #communicates with twitch api to see if the user is following the specified channel
-
     try:
         twitchAPI = urllib2.urlopen("http://api.twitch.tv/kraken/users/"+usr+"/follows/channels/"+cfg.CHAN)
         fJson = json.loads(twitchAPI.read())
@@ -59,10 +66,10 @@ def follow(usr):
 #       c -- what command that we are going to store
 #       p -- what is going to be said when command is used
 def createCommands(c, p):
-    if c in commands:
-        return "It already exists."
+    if unicode(c) in cfg.commands:
+        print cfg.commands
     try:
-        commands[c] = p
+        cfg.commands[c] = p
     except:
         return "Something broke :("
     return "It already exists"
@@ -74,19 +81,42 @@ def createCommands(c, p):
 #       c -- the command that was being used
 def useCommands(sock, c):
     try:
-        if c in commands:
-            return commands[c]
+        if unicode(c) in cfg.commands:
+            chat(sock, unicode(cfg.commands[c]))
     except:
-        return "Command doesn't exist"
-    return "Command doesn't exist"
+        chat(sock, "Broke!")
 
+#Function: removeCommands
+#Removes a command from the commands list
+#   Parameters:
+#       c -- the command that will be removed from the list
+def removeCommands(c):
+    try:
+        if unicode(c) in cfg.commands:
+            del(cfg.commands[c])
+    except:
+        return False
+
+#Function: constantGreeting
+#Prints out the command continuously after a certain amount of time
+def constantGreeting(sock):
+    while True:
+        try:
+            chat(sock, "Masc4Masc Mondays: Solo Stream with Jason! 7:30P/8PM EST until 11P/12AM")
+            chat(sock, "Tabby Tuesdays: Solo Stream with Trent! 7:30P/8PM EST until 11P/12AM")
+            chat(sock, "Thirsty Thursdays: Solo Stream with Matt! 10PM EST until 12AM")
+            chat(sock, "Festive Friday: Join the entire crew for party games! 7:30PM EST (ish) until we go to the bar (12A/1A)")
+            chat(sock, "Shady Saturday: Come talk shit and spill the T! 2PM EST until 8PM EST. WOOF!")
+        except:
+            'nothing'
+        time.sleep(30)
 
 #Function: threadFillOpList
 #In a seperate thread, fill up the op list
 def threatFillOpList():
     while True:
         try:
-            url = "http://tmi.twitch.tv/group/user/dkhusky8/chatters"
+            url = "http://tmi.twitch.tv/group/user/"+ cfg.CHAN +"/chatters"
             req = urllib2.Request(url, headers={"accept": "*/*"})
             response = urllib2.urlopen(req).read()
             if response.find("502 Bad Gateway") == -1:

@@ -9,4 +9,6 @@ CHAN = "dkhusky"
 RATE = (20/30) # messages per second
 
 oplist = {}
+followers = {}
+commands = {}
 
