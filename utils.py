@@ -51,7 +51,8 @@ def timeout(sock, usr, seconds=600):
 def follow(usr):
     #communicates with twitch api to see if the user is following the specified channel
     try:
-        twitchAPI = urllib2.urlopen("http://api.twitch.tv/kraken/users/"+usr+"/follows/channels/"+cfg.CHAN)
+        url = "http://api.twitch.tv/kraken/users/"+usr+"/follows/channels/"+cfg.CHAN
+        twitchAPI = urllib2.urlopen(url)
         fJson = json.loads(twitchAPI.read())
         if "error" in fJson:
             return False
@@ -59,6 +60,20 @@ def follow(usr):
             return True
     except:
         return False
+
+#Function: showGame
+#Shows what game the current user is playing
+#   Parameters:
+#       sock -- the socket over which to send the game
+def showGame(sock):
+    try:
+        url = "http://api.twitch.tv/kraken/channel/" + cfg.CHAN
+        twitchAPI = urllib2.urlopen(url)
+        fJson = json.load(twitchAPI.read())
+        for i in fJson["game"]:
+            chat(sock, i)
+    except:
+        'Shit Broke!'
 
 #Function: createCommands
 #Create temperary commands that you can add to your stream for the hell of it
@@ -100,7 +115,6 @@ def removeCommands(c):
 #Function: constantGreeting
 #Prints out the command continuously after a certain amount of time
 def constantGreeting(sock):
-    while True:
         try:
             chat(sock, "Masc4Masc Mondays: Solo Stream with Jason! 7:30P/8PM EST until 11P/12AM")
             chat(sock, "Tabby Tuesdays: Solo Stream with Trent! 7:30P/8PM EST until 11P/12AM")
@@ -109,7 +123,7 @@ def constantGreeting(sock):
             chat(sock, "Shady Saturday: Come talk shit and spill the T! 2PM EST until 8PM EST. WOOF!")
         except:
             'nothing'
-        time.sleep(30)
+        sleep(30)
 
 #Function: threadFillOpList
 #In a seperate thread, fill up the op list

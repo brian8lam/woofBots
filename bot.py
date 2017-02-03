@@ -37,12 +37,19 @@ def main():
            message = CHAT_MSG.sub("", response)
            print(response)
            timeCount += 1
+
+           # Multithreading for all the greeting
+           # Hope this works and doesn't break
+           t = threading.Thread(target=utils.constantGreeting(s))
+           t.daemon = True
+           t.start()
+
            # Custom Commands
 
-           #Timer code that allows it to run through, but this loop runs each time a command is issued.
+           #Not a real timer sadly, This will increment each time a command is issued.
            if timeCount == 500:
-               utils.chat(s, "Masc4Masc Mondays: Solo Stream with Jason! 7:30P/8PM EST until 11P/12AM")
-               utils.chat(s, "Tabby Tuesdays: Solo Stream with Trent! 7:30P/8PM EST until 11P/12AM")
+               utils.chat(s, "Masc4Masc Mondays: Solo Stream with Jason! 8PM EST until 11P/12AM")
+               utils.chat(s, "Tabby Tuesdays: Solo Stream with Trent! 8PM EST until 11P/12AM")
                utils.chat(s, "Thirsty Thursdays: Solo Stream with Matt! 10PM EST until 12AM")
                utils.chat(s, "Festive Friday: Join the entire crew for party games! 7:30PM EST (ish) until we go to the bar (12A/1A)")
                utils.chat(s, "Shady Saturday: Come talk shit and spill the T! 2PM EST until 8PM EST. WOOF!")
@@ -51,16 +58,14 @@ def main():
                timeCount = 0
 
            if message.strip() == "!messages" and utils.isOp(username):
-               utils.chat(s, "Masc4Masc Mondays: Solo Stream with Jason!")
-               utils.chat(s, "Tabby Tuesdays: Solo Stream with Trent!")
-               utils.chat(s, "Thirsty Thursdays: Solo Stream with Matt!")
+               utils.chat(s, "Masc4Masc Mondays: Solo Stream with Jason! 8PM EST until 11P/12AM")
+               utils.chat(s, "Tabby Tuesdays: Solo Stream with Trent! 8PM EST until 11P/12AM")
+               utils.chat(s, "Thirsty Thursdays: Solo Stream with Matt! 10PM EST until 12AM")
                utils.chat(s, "Festive Friday: Join the entire crew for party games! 7:30PM EST (ish) until we go to the bar (12A/1A)")
                utils.chat(s, "Shady Saturday Come talk shit and spill the T! 2PM EST (ish) until 8PM EST. WOOooF!")
-           if message.strip() == "!socialmedia":
-               utils.chat(s, "You can find us at.")
 
-           #!cl whispers the command list NOT WORKING! -- needs a seperate connection to Group chat :/ Not sure..
-           if message.split()[0] == "!cl":
+           #!commands whispers the command list NOT WORKING! -- needs a seperate connection to Group chat :/ Not sure..
+           if message.split()[0] == "!commands" and utils.isOp(username):
                utils.whisper(s, message.split(' ', 2)[1], message.split(' ', 2)[2])
            #!ban Hammer
            if message.split()[0] == "!ban" and utils.isOp(username):
@@ -76,6 +81,11 @@ def main():
                    utils.timeout(s, message.split()[1])
                except:
                    utils.chat(s, "No name")
+           #!game (In testing)
+           if message.strip() == "!game":
+               #if len(message.strip()) > 1: #get requests package installed
+                #   utils.chat(s, utils.currentPlaying())
+               utils.showGame(s)
            #!create Command
            if message.split()[0] == "!create" and utils.isOp(username): # I could make this safer by checking of the word has ! before the command else add it.
                utils.createCommands(message.split(' ', 2)[1], message.split(' ', 2)[2])
@@ -102,7 +112,12 @@ if __name__ == "__main__":
 #Make it so that it will repeat messages of either !messages !socialmedia(supercubs pages, Yasdomdaddy pages)
 #Users:
     # !firetemple --> link to youtube link of firetemple fail
-    # !help --> link all options usr can send
+    # !help --> link all options usr can send --> not sure how to use whisper
+        # I want to have it check if it's isOp then use this command to show all else !isOp will show something else
+    # !points
+        # current issues with whispers is that it's not implementing correctly
+        # how will i do the sleep time for each point addition?
+        # secondary application? multithreading?
 
 
 #Admins:
@@ -124,8 +139,12 @@ if __name__ == "__main__":
         # change boolean to false
     # !winner
         # remove bot from list list.remove(value)
-        #random number gen to choose out of the array
+        # random number gen to choose out of the array
         # multiplier equation later on for it
+    # !game
+        # !game <game> - will update game once having requests is installed
+            # requests.put("http://api.twitch.tv/kraken/channels/" + cfg.CHAN, game=varGame)
+        # will show what game is currently playing
 
 #Done/Works:
     # !create
