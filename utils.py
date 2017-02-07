@@ -87,7 +87,7 @@ def eliminated(sock, winner):
         for (name, item) in eliminateList.iteritems():
             print item
             if unicode(item) == unicode(winner):
-                n += name
+                n = n + name + " "
         chat(sock, n);
         print n
     except:
