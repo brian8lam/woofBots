@@ -40,14 +40,14 @@ def main():
 
            # Multithreading for all the greeting
            # Hope this works and doesn't break
-           t = threading.Thread(target=utils.constantGreeting(s))
-           t.daemon = True
-           t.start()
+           #t = threading.Thread(target=utils.constantGreeting(s))
+           #t.daemon = True
+           #t.start()
 
            # Custom Commands
 
            #Not a real timer sadly, This will increment each time a command is issued.
-           if timeCount == 500:
+           if timeCount == 100:
                utils.chat(s, "Masc4Masc Mondays: Solo Stream with Jason! 8PM EST until 11P/12AM")
                utils.chat(s, "Tabby Tuesdays: Solo Stream with Trent! 8PM EST until 11P/12AM")
                utils.chat(s, "Thirsty Thursdays: Solo Stream with Matt! 10PM EST until 12AM")
@@ -81,6 +81,12 @@ def main():
                    utils.timeout(s, message.split()[1])
                except:
                    utils.chat(s, "No name")
+           #!eliminate <name>
+           if message.split()[0] == "!eliminate":
+               utils.eliminate(s, message.split()[1], username)
+           #!eliminated <name>
+           if message.split()[0] == "!eliminated" and utils.isOp(username):
+               utils.eliminated(s, message.split()[1])
            #!game (In testing)
            if message.strip() == "!game":
                #if len(message.strip()) > 1: #get requests package installed

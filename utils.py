@@ -7,6 +7,7 @@ import json
 import time, thread
 from time import sleep
 
+eliminateList = {}
 
 #Function: chat
 #Send a chat message to the server.
@@ -61,9 +62,40 @@ def follow(usr):
     except:
         return False
 
+#Function: eliminate
+#User inputs which user will be eliminated
+#   Parameters:
+#       sock -- the socket over which to send the message that it was accepted
+#       name -- the name of the person they chose
+#       user -- the user who inputed the message
+def eliminate(sock, name, user):
+    try:
+            eliminateList[user] = name;
+            chat(sock, user + " thinks " + name + " is going home tonight!!!")
+    except:
+        "something broke!"
+
+#Fucntion: eliminated
+#Mod inputs which user won the elimination
+#   Parameters:
+#       sock -- the socket which to send the message of who won through the array
+#       winner -- the winner who won the event
+def eliminated(sock, winner):
+    try:
+        n = "Congrats to these people who guessed " + winner + " would be eliminated: "
+        print eliminateList
+        for (name, item) in eliminateList.iteritems():
+            print item
+            if unicode(item) == unicode(winner):
+                n += name
+        chat(sock, n);
+        print n
+    except:
+        "something broke!"
+
 #Function: showGame
 #Shows what game the current user is playing
-#   Parameters:
+#   Parameters:z
 #       sock -- the socket over which to send the game
 def showGame(sock):
     try:
@@ -123,7 +155,7 @@ def constantGreeting(sock):
             chat(sock, "Shady Saturday: Come talk shit and spill the T! 2PM EST until 8PM EST. WOOF!")
         except:
             'nothing'
-        sleep(30)
+
 
 #Function: threadFillOpList
 #In a seperate thread, fill up the op list
