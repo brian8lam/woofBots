@@ -153,6 +153,8 @@ if __name__ == "__main__":
         # will show what game is currently playing
 
 #Done/Works:
+    #!eliminate <name>
+    #!eliminated <name>
     # !create
         # look into this on how to make it so that it allows you to create your own if statement
             #basic template of "if message.strip() == array[i]

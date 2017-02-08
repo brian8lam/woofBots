@@ -1,0 +1,11 @@
+This project is for fun use, in cooperation with SuperCubs and YasDomDaddy Twitch streams.
+The ideas are a combination of people's usage and are free to use.
+Development and changes will be updated as long as the use of this code is needed for the above Twitch streamers
+This is entirely a side project for the fun and educational purpose.
+
+-DKHusky ... Brian Lam
+
+Programs:
+- Python 2
+- PyCharm Community Edition - other ways to compile code
+- Requests package - needed for !game
