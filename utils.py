@@ -70,7 +70,7 @@ def follow(usr):
 #       user -- the user who inputed the message
 def eliminate(sock, name, user):
     try:
-            eliminateList[user] = name;
+            eliminateList[user] = name.lower();
             chat(sock, user + " thinks " + name + " is going home tonight!!!")
     except:
         "something broke!"
@@ -86,7 +86,7 @@ def eliminated(sock, winner):
         print eliminateList
         for (name, item) in eliminateList.iteritems():
             print item
-            if unicode(item) == unicode(winner):
+            if unicode(item) == unicode(winner.lower()):
                 n = n + name + " "
         chat(sock, n);
         print n

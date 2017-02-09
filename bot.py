@@ -28,14 +28,17 @@ def main():
 
    timeCount = 0
    while True:
-       response = s.recv(1024).decode("utf-8")
+       try:
+        response = s.recv(1024)
        #if the connection to tmi.twitch.tv connects will get a pong
-       if response == "PING :tmi.twitch.tv\r\n":
-           s.send("PONG :tmi.twtich.tv\r\n".encode("utf-8"))
-       else:
-           username = re.search(r"\w+", response).group(0)
-           message = CHAT_MSG.sub("", response)
-           print(response)
+        if not response: break
+        r = response.decode("utf-8")
+        if r == "PING :tmi.twitch.tv\r\n":
+            s.send("PONG :tmi.twtich.tv\r\n".encode("utf-8"))
+        else:
+           username = re.search(r"\w+", r).group(0)
+           message = CHAT_MSG.sub("", r)
+           print(r)
            timeCount += 1
 
            # Multithreading for all the greeting
@@ -47,17 +50,17 @@ def main():
            # Custom Commands
 
            #Not a real timer sadly, This will increment each time a command is issued.
-           if timeCount == 100:
+           if timeCount == 500:
                utils.chat(s, "Masc4Masc Mondays: Solo Stream with Jason! 8PM EST until 11P/12AM")
                utils.chat(s, "Tabby Tuesdays: Solo Stream with Trent! 8PM EST until 11P/12AM")
                utils.chat(s, "Thirsty Thursdays: Solo Stream with Matt! 10PM EST until 12AM")
                utils.chat(s, "Festive Friday: Join the entire crew for party games! 7:30PM EST (ish) until we go to the bar (12A/1A)")
                utils.chat(s, "Shady Saturday: Come talk shit and spill the T! 2PM EST until 8PM EST. WOOF!")
-           if timeCount == 200:
+           if timeCount == 1000:
                utils.chat(s, "Remeber to follow and turn on the notification settings to know when we go on. To get more information about us, see the details portion of the stream.")
                timeCount = 0
-
-           if message.strip() == "!messages" and utils.isOp(username):
+           print utils.isOp(username)
+           if message.strip() == "!schedule" and utils.isOp(username):
                utils.chat(s, "Masc4Masc Mondays: Solo Stream with Jason! 8PM EST until 11P/12AM")
                utils.chat(s, "Tabby Tuesdays: Solo Stream with Trent! 8PM EST until 11P/12AM")
                utils.chat(s, "Thirsty Thursdays: Solo Stream with Matt! 10PM EST until 12AM")
@@ -109,6 +112,8 @@ def main():
             #        utils.chat(s, username + " is a mod or higher")
            #if message.strip() == "!time":
            #    utils.chat(s, "It is currently " + time.strftime("%I: %M %p %Z on %A, %B %d %Y."))
+       except:
+        print "shitBroke!"
        sleep(1)
 
 
