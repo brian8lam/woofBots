@@ -104,12 +104,12 @@ def main():
            #!delete commands
            if message.split()[0] == "!delete" and utils.isOp(username):
                utils.removeCommands(message.split()[1])
-           # if message.strip() == "!points":
-           #    utils.chat (s, username + " points are " + utils.points(username))
+           #if message.strip() == "!points":
+           #   utils.points(s, username + " points are " + utils.points(username))
            #if message.strip() == "!mods":
-            #   print cfg.oplist
-            #   if utils.isOp(username):
-            #        utils.chat(s, username + " is a mod or higher")
+           #   print cfg.oplist
+           #   if utils.isOp(username):
+           #        utils.chat(s, username + " is a mod or higher")
            #if message.strip() == "!time":
            #    utils.chat(s, "It is currently " + time.strftime("%I: %M %p %Z on %A, %B %d %Y."))
        except:
