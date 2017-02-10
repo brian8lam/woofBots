@@ -95,7 +95,7 @@ def eliminated(sock, winner):
 
 #Function: showGame
 #Shows what game the current user is playing
-#   Parameters:z
+#   Parameters:
 #       sock -- the socket over which to send the game
 def showGame(sock):
     try:
@@ -103,9 +103,17 @@ def showGame(sock):
         twitchAPI = urllib2.urlopen(url)
         fJson = json.load(twitchAPI.read())
         for i in fJson["game"]:
-            chat(sock, i)
+            chat(sock, "The Game currently playing is %s." %i)
     except:
         'Shit Broke!'
+
+#Function: updateGame
+#Update the current game to a new game
+#   Parameters:
+#       sock -- the socket over which to send the update?
+#       game -- the new game to update
+def updateGame(sock, game):
+    return 0
 
 #Function: createCommands
 #Create temperary commands that you can add to your stream for the hell of it

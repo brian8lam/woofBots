@@ -92,8 +92,8 @@ def main():
                utils.eliminated(s, message.split()[1])
            #!game (In testing)
            if message.strip() == "!game":
-               #if len(message.strip()) > 1: #get requests package installed
-                #   utils.chat(s, utils.currentPlaying())
+               if len(message.strip()) > 1 and utils.isOp(username): #get requests package installed
+                  utils.updateGame(s, message.split()[1])
                utils.showGame(s)
            #!create Command
            if message.split()[0] == "!create" and utils.isOp(username): # I could make this safer by checking of the word has ! before the command else add it.
