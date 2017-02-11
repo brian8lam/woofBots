@@ -9,6 +9,7 @@ import time
 import thread
 import os
 import threading
+from datetime import datetime, timedelta
 from time import sleep
 
 def main():
@@ -26,6 +27,7 @@ def main():
    thread.start_new_thread(utils.threatFillOpList, ())
    #thread.start_new_thread(utils.constantGreeting(s), ()) #look into multiprocessing / multithreading (threding library?)
 
+   start =
    timeCount = 0
    while True:
        try:
@@ -104,14 +106,16 @@ def main():
            #!delete commands
            if message.split()[0] == "!delete" and utils.isOp(username):
                utils.removeCommands(message.split()[1])
+           if message.strip() == "!uptime":
+               tdelta =
+               utils.chat(s, "%s have been on for: %s" %()))
            #if message.strip() == "!points":
            #   utils.points(s, username + " points are " + utils.points(username))
            #if message.strip() == "!mods":
            #   print cfg.oplist
            #   if utils.isOp(username):
            #        utils.chat(s, username + " is a mod or higher")
-           #if message.strip() == "!time":
-           #    utils.chat(s, "It is currently " + time.strftime("%I: %M %p %Z on %A, %B %d %Y."))
+
        except:
         print "shitBroke!"
        sleep(1)
