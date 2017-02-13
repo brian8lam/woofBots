@@ -144,6 +144,15 @@ def removeCommands(c):
     except:
         return False
 
+#Function: Valentines
+#For Valentines day event, users can give Valentines to people
+#   Parameters:
+#       s -- the socket to send the response
+#       name -- the user gave the Valentine to
+#       username --
+def valentines(sock, name, username):
+    return 0
+
 #Function: constantGreeting
 #Prints out the command continuously after a certain amount of time
 def constantGreeting(sock):

@@ -104,6 +104,9 @@ def main():
            #!delete commands
            if message.split()[0] == "!delete" and utils.isOp(username):
                utils.removeCommands(message.split()[1])
+           #!valentine
+           if message.split()[0] == "!valentine":
+               utils.valentine(s, message.split()[1], username)
            #if message.strip() == "!points":
            #   utils.points(s, username + " points are " + utils.points(username))
            #if message.strip() == "!mods":
