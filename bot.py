@@ -107,6 +107,9 @@ def main():
            #!valentine
            if message.split()[0] == "!valentine":
                utils.valentine(s, message.split()[1], username)
+           #!total
+           if message.split()[0] == "!total" and username == "dkhusky":
+               utils.total(s, message.split()[1])
            #if message.strip() == "!points":
            #   utils.points(s, username + " points are " + utils.points(username))
            #if message.strip() == "!mods":
