@@ -9,7 +9,11 @@ import time
 import thread
 import os
 import threading
+from datetime import datetime, timedelta
 from time import sleep
+
+
+start = datetime.now()
 
 def main():
    #print("hello")
@@ -104,6 +108,11 @@ def main():
            #!delete commands
            if message.split()[0] == "!delete" and utils.isOp(username):
                utils.removeCommands(message.split()[1])
+           #!uptime
+           if message.strip() == "!uptime":
+               then = datetime.now()
+               utils.chat(s, cfg.CHAN + " have been on for: " + (then - start))
+
            #!valentine
            if message.split()[0] == "!valentine":
                utils.valentine(s, message.split()[1], username)
@@ -113,14 +122,14 @@ def main():
            #!switch
            if message.strip() == "!switch":
                utils.chat(s, "Come join us at midinght release of the switch on March 3rd. We will be streaming for the release of the switch, more info to come!!!")
+
            #if message.strip() == "!points":
            #   utils.points(s, username + " points are " + utils.points(username))
            #if message.strip() == "!mods":
            #   print cfg.oplist
            #   if utils.isOp(username):
            #        utils.chat(s, username + " is a mod or higher")
-           #if message.strip() == "!time":
-           #    utils.chat(s, "It is currently " + time.strftime("%I: %M %p %Z on %A, %B %d %Y."))
+
        except:
         print "shitBroke!"
        sleep(1)
@@ -134,11 +143,6 @@ if __name__ == "__main__":
     # !firetemple --> link to youtube link of firetemple fail
     # !help --> link all options usr can send --> not sure how to use whisper
         # I want to have it check if it's isOp then use this command to show all else !isOp will show something else
-    # !points
-        # current issues with whispers is that it's not implementing correctly
-        # how will i do the sleep time for each point addition?
-        # secondary application? multithreading?
-
 
 #Admins:
     # !Jasongram ??
@@ -178,3 +182,6 @@ if __name__ == "__main__":
     # !ban <user> - not needed has /ban on basicis twitch chat
     # !timeout <user>
     #  !messages ??
+    #!valentine
+    #!total
+    #!uptime
