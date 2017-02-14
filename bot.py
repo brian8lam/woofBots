@@ -12,6 +12,9 @@ import threading
 from datetime import datetime, timedelta
 from time import sleep
 
+
+start = datetime.now()
+
 def main():
    #print("hello")
    #Networking things
@@ -27,7 +30,6 @@ def main():
    thread.start_new_thread(utils.threatFillOpList, ())
    #thread.start_new_thread(utils.constantGreeting(s), ()) #look into multiprocessing / multithreading (threding library?)
 
-   start =
    timeCount = 0
    while True:
        try:
@@ -107,8 +109,8 @@ def main():
            if message.split()[0] == "!delete" and utils.isOp(username):
                utils.removeCommands(message.split()[1])
            if message.strip() == "!uptime":
-               tdelta =
-               utils.chat(s, "%s have been on for: %s" %()))
+               then = datetime.now()
+               utils.chat(s, cfg.CHAN + " have been on for: " + (then - start))
            #if message.strip() == "!points":
            #   utils.points(s, username + " points are " + utils.points(username))
            #if message.strip() == "!mods":
@@ -129,11 +131,6 @@ if __name__ == "__main__":
     # !firetemple --> link to youtube link of firetemple fail
     # !help --> link all options usr can send --> not sure how to use whisper
         # I want to have it check if it's isOp then use this command to show all else !isOp will show something else
-    # !points
-        # current issues with whispers is that it's not implementing correctly
-        # how will i do the sleep time for each point addition?
-        # secondary application? multithreading?
-
 
 #Admins:
     # !Jasongram ??
@@ -173,3 +170,6 @@ if __name__ == "__main__":
     # !ban <user> - not needed has /ban on basicis twitch chat
     # !timeout <user>
     #  !messages ??
+    #!valentine
+    #!total
+    #!uptime
