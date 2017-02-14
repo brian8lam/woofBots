@@ -108,8 +108,11 @@ def main():
            if message.split()[0] == "!valentine":
                utils.valentine(s, message.split()[1], username)
            #!total
-           if message.split()[0] == "!total" and username == "dkhusky":
-               utils.total(s, message.split()[1])
+           if message.split()[0] == "!total":
+               utils.total(s)
+           #!switch
+           if message.strip() == "!switch":
+               utils.chat(s, "Come join us at midinght release of the switch on March 3rd. We will be streaming for the release of the switch, more info to come!!!")
            #if message.strip() == "!points":
            #   utils.points(s, username + " points are " + utils.points(username))
            #if message.strip() == "!mods":

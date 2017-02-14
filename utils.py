@@ -165,8 +165,8 @@ def valentines(sock, name, username):
 #   Parameters:
 #       sock -- the socket to send the response
 #       list -- the list that you want to print out
-def total(sock, list):
-    for (index, value) in list:
+def total(sock):
+    for (index, value) in cfg.valentine:
         chat(sock, "%s : %d" %(index, value))
 
 #Function: constantGreeting
