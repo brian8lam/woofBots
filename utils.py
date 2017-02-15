@@ -102,8 +102,9 @@ def showGame(sock):
         url = "http://api.twitch.tv/kraken/channel/" + cfg.CHAN
         twitchAPI = urllib2.urlopen(url)
         fJson = json.load(twitchAPI.read())
-        for i in fJson["game"]:
-            chat(sock, i)
+        for index, value in fJson.iteritems():
+            if (index == "game"):
+                chat(sock, value)
     except:
         'Shit Broke!'
 
