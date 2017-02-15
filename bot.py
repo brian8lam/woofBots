@@ -56,11 +56,12 @@ def main():
                utils.chat(s, "Thirsty Thursdays: Solo Stream with Matt! 10PM EST until 12AM")
                utils.chat(s, "Festive Friday: Join the entire crew for party games! 7:30PM EST (ish) until we go to the bar (12A/1A)")
                utils.chat(s, "Shady Saturday: Come talk shit and spill the T! 2PM EST until 8PM EST. WOOF!")
-           if timeCount == 1000:
-               utils.chat(s, "Remeber to follow and turn on the notification settings to know when we go on. To get more information about us, see the details portion of the stream.")
-               timeCount = 0
+               timecCount = 0
+           #if timeCount == 1000:
+           #    utils.chat(s, "Remeber to follow and turn on the notification settings to know when we go on. To get more information about us, see the details portion of the stream.")
+           #    timeCount = 0
            print utils.isOp(username)
-           if message.strip() == "!schedule" and utils.isOp(username):
+           if message.strip() == "!schedule" and utils.isOp(username) and cfg.CHAN == "supercubs":
                utils.chat(s, "Masc4Masc Mondays: Solo Stream with Jason! 8PM EST until 11P/12AM")
                utils.chat(s, "Tabby Tuesdays: Solo Stream with Trent! 8PM EST until 11P/12AM")
                utils.chat(s, "Thirsty Thursdays: Solo Stream with Matt! 10PM EST until 12AM")
@@ -106,12 +107,12 @@ def main():
                utils.removeCommands(message.split()[1])
            #!valentine
            if message.split()[0] == "!valentine":
-               utils.valentine(s, message.split()[1], username)
+               utils.valentine(s, message.split(' ', 1)[1], username)
            #!total
-           if message.split()[0] == "!total":
+           if message.strip() == "!total":
                utils.total(s)
            #!switch
-           if message.strip() == "!switch":
+           if message.strip() == "!switch" and utils.isOp(username):
                utils.chat(s, "Come join us at midinght release of the switch on March 3rd. We will be streaming for the release of the switch, more info to come!!!")
            #if message.strip() == "!points":
            #   utils.points(s, username + " points are " + utils.points(username))
@@ -122,7 +123,7 @@ def main():
            #if message.strip() == "!time":
            #    utils.chat(s, "It is currently " + time.strftime("%I: %M %p %Z on %A, %B %d %Y."))
        except:
-        print "shitBroke!"
+        print "Main broke!"
        sleep(1)
 
 
