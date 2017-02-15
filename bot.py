@@ -113,7 +113,6 @@ def main():
            if message.strip() == "!uptime":
                then = datetime.now()
                utils.chat(s, cfg.CHAN + " have been on for: " + (then - start))
-
            #!valentine
            if message.split()[0] == "!valentine":
                utils.valentine(s, message.split(' ', 1)[1], username)

@@ -156,7 +156,7 @@ def valentine(sock, name, username):
     if not(username in cfg.valentine):
         cfg.valentine[username] = 2
     if name[:1] == "@":
-        newname = name.split('@')[1]
+        newname = name.split('@')[1].strip()
         print newname
     if not(newname in cfg.valentine):
         cfg.valentine[newname] = 2
