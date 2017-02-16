@@ -209,4 +209,31 @@ def threatFillOpList():
 #Function: isOp
 #Checks if user is in the oplist if is returns true else false
 def isOp(usr):
-    return usr in cfg.oplist
+    return usr in cfg.oplist    return usr in cfg.oplist
+
+#Function: saveData
+#saves all users and values from dictionary to db SQLite
+def saveData():
+    return 0
+
+#Function: earnPoints
+#After a certain amount of time users that are logged in on list will gain points.
+#Parameters:
+#   viewers -- the list/dictionary of users that are watching
+def earnPoints(viewers):
+    #Logic:
+    #   This command is issued when timer hits a certain amount of time.
+    #   This will pull who is vieweing currently to gain points
+    #   It will look through the dictionary for all names that are currently no there and add them from the Json to the dictonary
+    #   Increase all values by 1
+    #   timer gets reset -- this will be on the main side???
+    return 0
+
+#Function: points
+#Prints out how much points there are for that user
+#Parameters:
+#   sock -- the socket to send the response
+#   user -- the user that issued the command
+def points(sock, user):
+
+    return 0
