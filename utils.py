@@ -209,7 +209,7 @@ def threatFillOpList():
 #Function: isOp
 #Checks if user is in the oplist if is returns true else false
 def isOp(usr):
-    return usr in cfg.oplist    return usr in cfg.oplist
+    return usr in cfg.oplist
 
 #Function: saveData
 #saves all users and values from dictionary to db SQLite
