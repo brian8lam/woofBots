@@ -5,6 +5,8 @@ import cfg
 import urllib2
 import json
 import time, thread
+import requests
+import sqlite3
 from time import sleep
 
 eliminateList = {}
