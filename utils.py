@@ -153,15 +153,17 @@ def removeCommands(c):
 #       sock -- the socket to send the response
 #       name -- the user gave the Valentine to
 #       username --
-def valentines(sock, name, username):
+def valentine(sock, name, username):
+    newname = name.strip()
     if not(username in cfg.valentine):
         cfg.valentine[username] = 2
     if name[:1] == "@":
-        name == name.split('@')[0]
-    if not(name in cfg.valentine):
-        cfg.valentine[name] = 2
-    cfg.valentine[name] = cfg.valentine[name] + 1
-    chat(sock, "%s gave a Valentine to $s <3" %(username, name))
+        newname = name.split('@')[1].strip()
+        print newname
+    if not(newname in cfg.valentine):
+        cfg.valentine[newname] = 2
+    cfg.valentine[newname] = cfg.valentine[newname] + 1
+    chat(sock, username +" gave a Valentine to " + newname + " <3")
 
 #Function: total
 #Returns the total of the array
@@ -169,8 +171,13 @@ def valentines(sock, name, username):
 #       sock -- the socket to send the response
 #       list -- the list that you want to print out
 def total(sock):
-    for (index, value) in cfg.valentine:
-        chat(sock, "%s : %d" %(index, value))
+    try:
+        print cfg.valentine
+        for index, value in cfg.valentine.iteritems():
+            chat(sock, index.upper() + " : " + str(value))
+            print (index, value)
+    except:
+        "I'm not printing"
 
 #Function: constantGreeting
 #Prints out the command continuously after a certain amount of time
